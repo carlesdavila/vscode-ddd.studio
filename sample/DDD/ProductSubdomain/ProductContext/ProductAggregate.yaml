@@ -1,0 +1,29 @@
+aggregate:
+  name: Product
+  description: "Product Description."
+  stateTransitions: 
+    - state: Inactive
+      transitions:
+        - to: Active
+    - state: Active
+      transitions:
+        - to: Cancelled
+    - state: Cancelled
+  enforcedInvariants: 
+    - "Order must have at least one OrderItem."
+    - "Order total must be recalculated when items are added or removed."
+  correctivePolicies: 
+    - "If an OrderItem is out of stock, notify the customer and adjust the order or issue a refund."
+    - "If the order status is not updated due to a system failure, retry the update process."
+  handledCommands: 
+    - PlaceOrder
+    - Confirm
+    - Ship
+    - Complete
+    - Cancel
+  createdEvents: 
+    - OrderPlaced
+    - OrderConfirmed
+    - OrderShipped
+    - OrderCompleted
+    - OrderCancelled
